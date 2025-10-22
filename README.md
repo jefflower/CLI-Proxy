@@ -41,3 +41,38 @@ python main.py
 - `POST /commands/{execution_id}/stop`: 停止一个正在运行的命令。
 - `GET /commands`: 列出所有命令。
 - `WS /commands/{execution_id}/stream`: 订阅命令的实时输出。
+
+## Demo 测试
+
+本项目包含一个简单的测试应用 `test_app.py`，可以用来验证代理服务是否正常工作。
+
+### 1. 启动主服务
+
+首先，确保主服务 `main.py` 正在运行：
+
+```bash
+python main.py
+```
+
+服务将默认在 `http://0.0.0.0:8000` 上启动。
+
+### 2. 启动测试应用
+
+在另一个终端中，启动测试应用 `test_app.py`：
+
+```bash
+python test_app.py
+```
+
+测试应用将启动在 `http://localhost:8001`。
+
+### 3. 进行测试
+
+在浏览器中打开 `http://localhost:8001`。你会看到一个 "开始 Ping 测试" 的按钮。
+
+点击该按钮，测试应用会：
+1.  向主服务的 `/commands/start` 端点发送请求，要求执行 `ping 8.8.8.8 -c 5` 命令。
+2.  建立一个 WebSocket 连接到主服务，以接收命令的实时输出。
+3.  在页面上实时显示 `ping` 命令的输出。
+
+如果一切正常，你将看到 `ping` 命令的输出结果实时显示在页面上。
